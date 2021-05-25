@@ -1,15 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store/store'
 
-// Define a type for the slice state
+
+type BooksState = {
+  volumeInfo: any;
+  id: number
+  shelf: string
+};
+
+const initialState : BooksState[] = [];
 
 export const booksSlice = createSlice({
   name: 'books',
   // `createSlice` will infer the state type from the `initialState` argument
-  initialState: [],
+  initialState,
   reducers: {
       // Use the PayloadAction type to declare the contents of `action.payload`
-    receive_books: (state, action: PayloadAction<{}>) => {
+    receive_books: (state, action: PayloadAction<BooksState>) => {
         console.log(action.payload);
         
         return [

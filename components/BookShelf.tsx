@@ -1,24 +1,18 @@
 import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 
-import { useSelector, useDispatch } from "react-redux";
+//import { useSelector, useDispatch } from "react-redux";
 import { selectBooks } from "../features/books/booksSlice";
 
 import * as BooksAPI from "../utils/api";
-import { handleInitialData } from "../features/shared/shares";
+import { handleInitialData } from "../features/shared/shared";
 //import Book from "./Book";
+import { useAppSelector, useAppDispatch } from "../hooks";
 
 const BookShelf = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(handleInitialData());
@@ -26,11 +20,22 @@ const BookShelf = ({ navigation }) => {
 
   const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
 
-  const convertShelf = {
-    "Currently Reading": "currentlyReading",
-    "Want to Read": "wantToRead",
-    Read: "read",
+  const convertShelf = (shelf: string) => {
+    switch (shelf) {
+      case "Currently Reading":
+        return "currentlyReading";
+      case "Want to Read":
+        return "wantToRead";
+      case "read":
+        return "Read";
+    }
   };
+
+  // const convertShelf = {
+  //   currentlyReading: "Currently Reading",
+  //   wantToRead: "Want to Read",
+  //   Read: "read",
+  // };
 
   //   const updateBookShelf = (id, shelf) => {
   //     const bookId = id.id;
@@ -40,7 +45,7 @@ const BookShelf = ({ navigation }) => {
   //     });
   //   };
 
-  const books = useSelector(selectBooks);
+  const books = useAppSelector(selectBooks);
   console.log("My books", books);
 
   return (
@@ -52,7 +57,7 @@ const BookShelf = ({ navigation }) => {
             <View style={styles.booksGrid}>
               {books
                 .filter(function (book) {
-                  return book.shelf === convertShelf[shelf];
+                  return book.shelf === convertShelf(shelf);
                 })
                 .map((book) => {
                   const background = `${
@@ -77,7 +82,7 @@ const BookShelf = ({ navigation }) => {
                       >
                         <View style={styles.book}>
                           <View style={styles.bookTop}>
-                            <ImageBackground
+                            <Image
                               source={{ uri: background }}
                               style={{
                                 width: 128,
@@ -120,7 +125,7 @@ const BookShelf = ({ navigation }) => {
             })
           }
         >
-          <Ionicons name="add-circle" size={34} color="#1e212d" />
+          <Ionicons name="add-circle" size={42} color="#1e212d" />
         </TouchableOpacity>
       </View>
     </View>

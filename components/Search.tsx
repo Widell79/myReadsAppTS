@@ -36,7 +36,7 @@ const Search = ({ route }) => {
   const searchedBooks = useSelector(selectSearch);
   console.log("searched", searchedBooks);
 
-  const renderBooks = ({ item, index }) => {
+  const renderBooks = ({ item }) => {
     console.log("rendered book", item);
     const background = `${
       item.volumeInfo.imageLinks
@@ -83,7 +83,7 @@ const Search = ({ route }) => {
           <FlatList
             data={searchedBooks}
             numColumns={4}
-            renderItem={({ item, index }) => renderBooks({ item, index })}
+            renderItem={({ item }) => renderBooks({ item })}
             keyExtractor={(item, index) => item.id.toString()}
           />
         </View>
