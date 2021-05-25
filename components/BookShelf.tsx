@@ -6,9 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 //import { useSelector, useDispatch } from "react-redux";
 import { selectBooks } from "../features/books/booksSlice";
 
-import * as BooksAPI from "../utils/api";
 import { handleInitialData } from "../features/shared/shared";
-//import Book from "./Book";
 import { useAppSelector, useAppDispatch } from "../hooks";
 
 const BookShelf = ({ navigation }) => {
@@ -36,14 +34,6 @@ const BookShelf = ({ navigation }) => {
   //   wantToRead: "Want to Read",
   //   Read: "read",
   // };
-
-  //   const updateBookShelf = (id, shelf) => {
-  //     const bookId = id.id;
-
-  //     BooksAPI.getBook(bookId).then((book) => {
-  //       setBooks(() => [{ ...book, shelf: shelf }]);
-  //     });
-  //   };
 
   const books = useAppSelector(selectBooks);
   console.log("My books", books);
@@ -77,6 +67,7 @@ const BookShelf = ({ navigation }) => {
                             language: book.volumeInfo.language,
                             pages: book.volumeInfo.pageCount,
                             publishedDate: book.volumeInfo.publishedDate,
+                            id: book.id,
                           });
                         }}
                       >

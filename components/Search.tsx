@@ -84,7 +84,7 @@ const Search = ({ route }) => {
             data={searchedBooks}
             numColumns={4}
             renderItem={({ item }) => renderBooks({ item })}
-            keyExtractor={(item, index) => item.id.toString()}
+            keyExtractor={(item: unknown) => item.id.toString()}
           />
         </View>
       </View>

@@ -1,21 +1,32 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import * as BooksAPI from "../utils/api";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { updateShelf } from "../features/books/booksSlice";
 
 const Book = ({ route }) => {
   const {
     image,
     bookTitle,
     bookAuthor,
-    updateShelf,
     id,
     shelf,
     language,
     pages,
     publishedDate,
   } = route.params;
-  const handleUpdate = (e) => {
-    const value = e.target.value;
-    updateShelf({ id }, value);
+
+  const dispatch = useAppDispatch();
+
+  const updateBookShelf = (id: any, shelf: string) => {
+    const bookId = id.id;
+    dispatch(updateShelf(bookId, shelf));
+  };
+
+  const handleUpdate = (e: React.FormEvent<HTMLSelectElement>) => {
+    const value = e.currentTarget.value;
+    updateBookShelf({ id }, value);
+    console.log(value);
   };
 
   return (
@@ -24,7 +35,7 @@ const Book = ({ route }) => {
         <View style={styles.book}>
           <View>
             <Image
-            source= {{uri: image}}
+              source={{ uri: image }}
               style={{
                 width: 128,
                 height: 188,
@@ -32,17 +43,20 @@ const Book = ({ route }) => {
                 marginTop: 10,
               }}
             />
-            {/* <div onChange={handleUpdate} className="book-shelf-changer">
-            <select defaultValue={shelf === undefined ? "none" : shelf}>
-              <option value="move" disabled>
-                Move to...
-              </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
-            </select>
-          </div> */}
+            <View style={styles.bookShelfChanger}>
+              <select
+                onChange={handleUpdate}
+                defaultValue={shelf === undefined ? "none" : shelf}
+              >
+                <option value="move" disabled>
+                  Move to...
+                </option>
+                <option value="currentlyReading">Currently Reading</option>
+                <option value="wantToRead">Want to Read</option>
+                <option value="read">Read</option>
+                <option value="none">None</option>
+              </select>
+            </View>
           </View>
           <Text style={styles.bookTitle}>{bookTitle}</Text>
           <Text style={styles.bookAuthors}>{bookAuthor}</Text>
@@ -89,10 +103,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#7e7e7e",
   },
-});
+  bookShelfChanger: {
+    position: "relative",
+    right: 0,
+    bottom: -10,
+    width: 130,
+    height: 40,
 
-//   .book-cover-title {
-//     padding: 20px 10px 0;
-//     text-align: center;
-//     font-size: 0.8em;
-//   }
+    cursor: "pointer",
+  },
+});
