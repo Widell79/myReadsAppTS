@@ -11,3 +11,12 @@ web-build/
 
 # macOS
 .DS_Store
+
+# TypeScript
+#
+lib/
+
+# Jest
+#
+.jest/
+

@@ -9,6 +9,17 @@ import { selectBooks } from "../features/books/booksSlice";
 import { handleInitialData } from "../features/shared/shared";
 import { useAppSelector, useAppDispatch } from "../hooks";
 
+export const convertShelf = (shelf: string) => {
+  switch (shelf) {
+    case "Currently Reading":
+      return "currentlyReading";
+    case "Want to Read":
+      return "wantToRead";
+    case "read":
+      return "Read";
+  }
+};
+
 const BookShelf = ({ navigation }) => {
   const dispatch = useAppDispatch();
 
@@ -17,17 +28,6 @@ const BookShelf = ({ navigation }) => {
   }, []);
 
   const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
-
-  const convertShelf = (shelf: string) => {
-    switch (shelf) {
-      case "Currently Reading":
-        return "currentlyReading";
-      case "Want to Read":
-        return "wantToRead";
-      case "read":
-        return "Read";
-    }
-  };
 
   // const convertShelf = {
   //   currentlyReading: "Currently Reading",
@@ -122,6 +122,7 @@ const BookShelf = ({ navigation }) => {
     </View>
   );
 };
+
 export default BookShelf;
 
 const styles = StyleSheet.create({

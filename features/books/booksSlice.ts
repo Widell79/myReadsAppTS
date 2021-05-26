@@ -5,7 +5,7 @@ import {getBook} from "../../utils/api"
 
 
 type BooksState = {
-  volumeInfo: any;
+  volumeInfo: object;
   id: string
   shelf: string
 };
@@ -29,12 +29,13 @@ export const booksSlice = createSlice({
         ];
       },
     update_shelf: (state, action: PayloadAction<BooksState>) => {
+      console.log(action);
+      
       return [
         {
           ...state,
           ...action.payload,
-          shelf: action.payload.shelf,
-          
+          shelf: action.payload.shelf
           
         }
       ]
@@ -45,12 +46,12 @@ export const booksSlice = createSlice({
 
 export const { receive_books, update_shelf } = booksSlice.actions
 
-export function updateShelf(id: any, shelf: string) {
+export function updateShelf(id: string, shelf: string) {
   return async (dispatch) => {
     try {
       await getBook(id).then((book) => {
         console.log("Slice", book)});
-      dispatch(update_shelf(<BooksState>{shelf: shelf}));
+      dispatch(update_shelf(<BooksState>{shelf}));
     } catch (err) {
       console.warn("Error in saveCard: ", err);
       alert("There was an error saving your card. Please try again.");
