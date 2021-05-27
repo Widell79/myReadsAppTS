@@ -3,16 +3,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 
-import {store} from "./store/store";
+import { store } from "./store/store";
 import BookShelf from "./components/BookShelf";
 import Book from "./components/Book";
 import Search from "./components/Search";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { RootStackParamList } from "./components/RootStackParams";
 
 export default function App() {
-  const Stack = createStackNavigator();
+  const Stack = createStackNavigator<RootStackParamList>();
 
   return (
     <Provider store={store}>

@@ -14,6 +14,6 @@ const convertShelf = (shelf: string) => {
 describe("convertShelf", () => {
   it("should return the string in a new format", () => {
     expect(convertShelf("Currently Reading")).toBe("currentlyReading");
-    expect(convertShelf("Want to Read")).toBe("wantToRead");
+    expect(convertShelf("Want to Read")).toMatch("wantToRead");
   });
 });

@@ -5,7 +5,7 @@ import {getBook} from "../../utils/api"
 
 
 type BooksState = {
-  volumeInfo: object;
+  volumeInfo: { [key: string]: any };
   id: string
   shelf: string
 };

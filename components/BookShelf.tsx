@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "./RootStackParams";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -20,7 +23,10 @@ export const convertShelf = (shelf: string) => {
   }
 };
 
-const BookShelf = ({ navigation }) => {
+type bookShelfProp = StackNavigationProp<RootStackParamList, "BookShelf">;
+
+const BookShelf = () => {
+  const navigation = useNavigation<bookShelfProp>();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,12 +34,6 @@ const BookShelf = ({ navigation }) => {
   }, []);
 
   const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
-
-  // const convertShelf = {
-  //   currentlyReading: "Currently Reading",
-  //   wantToRead: "Want to Read",
-  //   Read: "read",
-  // };
 
   const books = useAppSelector(selectBooks);
   console.log("My books", books);
