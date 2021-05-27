@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { RouteProp } from "@react-navigation/native";
+import { BookRouteParams } from "./Params";
 import * as BooksAPI from "../utils/api";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../hooks";
 import { updateShelf } from "../features/books/booksSlice";
 
-const Book = ({ route }) => {
+interface bookProp {
+  route: RouteProp<BookRouteParams, "volumeInfo">;
+}
+
+const Book: React.FC<bookProp> = ({ route }) => {
   const {
     image,
     bookTitle,
@@ -18,7 +24,7 @@ const Book = ({ route }) => {
 
   const dispatch = useAppDispatch();
 
-  const updateBookShelf = (id: any, shelf: string) => {
+  const updateBookShelf = (id: { id: string }, shelf: string) => {
     const bookId = id.id;
     dispatch(updateShelf(bookId, shelf));
   };

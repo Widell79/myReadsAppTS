@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "./RootStackParams";
+import { RootStackParamList } from "./Params";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -23,10 +22,11 @@ export const convertShelf = (shelf: string) => {
   }
 };
 
-type bookShelfProp = StackNavigationProp<RootStackParamList, "BookShelf">;
+interface bookShelfProp {
+  navigation: StackNavigationProp<RootStackParamList, "BookShelf">;
+}
 
-const BookShelf = () => {
-  const navigation = useNavigation<bookShelfProp>();
+const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

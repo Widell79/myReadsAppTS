@@ -10,7 +10,7 @@ import Search from "./components/Search";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { RootStackParamList } from "./components/RootStackParams";
+import { RootStackParamList } from "./components/Params";
 
 export default function App() {
   const Stack = createStackNavigator<RootStackParamList>();

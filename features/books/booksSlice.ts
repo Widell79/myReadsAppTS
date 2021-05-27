@@ -2,15 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { State } from 'react-native-gesture-handler';
 import type { RootState } from '../../store/store'
 import {getBook} from "../../utils/api"
+import {BookParams} from "../../components/Params"
 
 
-type BooksState = {
-  volumeInfo: { [key: string]: any };
-  id: string
-  shelf: string
-};
 
-const initialState : BooksState[] = [];
+const initialState : BookParams[] = [];
 
 export const booksSlice = createSlice({
   name: 'books',
@@ -18,7 +14,7 @@ export const booksSlice = createSlice({
   initialState,
   reducers: {
       // Use the PayloadAction type to declare the contents of `action.payload`
-    receive_books: (state, action: PayloadAction<BooksState>) => {
+    receive_books: (state, action: PayloadAction<BookParams>) => {
         
         return [
           {
@@ -28,7 +24,7 @@ export const booksSlice = createSlice({
           },
         ];
       },
-    update_shelf: (state, action: PayloadAction<BooksState>) => {
+    update_shelf: (state, action: PayloadAction<BookParams>) => {
       console.log(action);
       
       return [
@@ -51,7 +47,7 @@ export function updateShelf(id: string, shelf: string) {
     try {
       await getBook(id).then((book) => {
         console.log("Slice", book)});
-      dispatch(update_shelf(<BooksState>{shelf}));
+      dispatch(update_shelf(<BookParams>{shelf}));
     } catch (err) {
       console.warn("Error in saveCard: ", err);
       alert("There was an error saving your card. Please try again.");

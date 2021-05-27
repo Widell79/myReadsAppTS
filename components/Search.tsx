@@ -1,4 +1,6 @@
 import React from "react";
+import { RouteProp } from "@react-navigation/native";
+import { BookRouteParams } from "./Params";
 import {
   View,
   StyleSheet,
@@ -9,12 +11,15 @@ import {
 } from "react-native";
 
 import { useSelector, useDispatch } from "react-redux";
-
 import { selectSearch, add_search } from "../features/search/searchSlice";
 
 import * as BooksAPI from "../utils/api";
 
-const Search = ({ route }) => {
+interface bookProp {
+  route: RouteProp<BookRouteParams, "volumeInfo">;
+}
+
+const Search: React.FC<bookProp> = ({ route }) => {
   const { currentBooks } = route.params;
 
   const dispatch = useDispatch();
@@ -84,7 +89,7 @@ const Search = ({ route }) => {
             data={searchedBooks}
             numColumns={4}
             renderItem={({ item }) => renderBooks({ item })}
-            keyExtractor={(item: unknown) => item.id.toString()}
+            keyExtractor={(item: { id: number }) => item.id.toString()}
           />
         </View>
       </View>
