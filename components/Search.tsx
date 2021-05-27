@@ -8,6 +8,8 @@ import {
   Text,
   Image,
   FlatList,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
 } from "react-native";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -32,8 +34,8 @@ const Search: React.FC<bookProp> = ({ route }) => {
     });
   };
 
-  const updateSearch = (e) => {
-    const value = e.target.value;
+  const updateSearch = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    const value = e.nativeEvent.text;
 
     searchBook(value);
   };
