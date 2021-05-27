@@ -12,7 +12,7 @@ import {
   TextInputChangeEventData,
 } from "react-native";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../hooks";
 import { selectSearch, add_search } from "../features/search/searchSlice";
 
 import * as BooksAPI from "../utils/api";
@@ -24,7 +24,7 @@ interface bookProp {
 const Search: React.FC<bookProp> = ({ route }) => {
   const { currentBooks } = route.params;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const searchBook = (query: string) => {
     BooksAPI.search(query).then((book) => {
@@ -40,7 +40,7 @@ const Search: React.FC<bookProp> = ({ route }) => {
     searchBook(value);
   };
 
-  const searchedBooks = useSelector(selectSearch);
+  const searchedBooks = useAppSelector(selectSearch);
   console.log("searched", searchedBooks);
 
   const renderBooks = ({ item }) => {
