@@ -12,4 +12,5 @@ export type BookParams = {
 
 export type BookRouteParams = {
     volumeInfo: { [key: string]: any };
+    
 };

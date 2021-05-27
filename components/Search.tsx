@@ -91,7 +91,7 @@ const Search: React.FC<bookProp> = ({ route }) => {
             data={searchedBooks}
             numColumns={4}
             renderItem={({ item }) => renderBooks({ item })}
-            keyExtractor={(item: { id: number }) => item.id.toString()}
+            keyExtractor={(item: any) => item.id.toString()}
           />
         </View>
       </View>
