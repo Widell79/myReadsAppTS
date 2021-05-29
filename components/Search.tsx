@@ -10,18 +10,22 @@ import {
   FlatList,
   NativeSyntheticEvent,
   TextInputChangeEventData,
+  TouchableOpacity,
 } from "react-native";
 
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { selectSearch, add_search } from "../features/search/searchSlice";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "./Params";
 
 import * as BooksAPI from "../utils/api";
 
 interface bookProp {
   route: RouteProp<BookRouteParams, "volumeInfo">;
+  navigation: StackNavigationProp<RootStackParamList, "Search">;
 }
 
-const Search: React.FC<bookProp> = ({ route }) => {
+const Search: React.FC<bookProp> = ({ route, navigation }) => {
   const { currentBooks } = route.params;
 
   const dispatch = useAppDispatch();
@@ -56,15 +60,30 @@ const Search: React.FC<bookProp> = ({ route }) => {
         <View style={styles.booksGrid}>
           <View style={styles.book}>
             <View>
-              <Image
-                source={{ uri: background }}
-                style={{
-                  width: 128,
-                  height: 188,
-                  backgroundColor: "#eee",
-                  marginTop: 10,
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Book", {
+                    bookTitle: item.volumeInfo.title,
+                    bookAuthor: item.volumeInfo.authors,
+                    image: background,
+                    shelf: item.shelf,
+                    language: item.volumeInfo.language,
+                    pages: item.volumeInfo.pageCount,
+                    publishedDate: item.volumeInfo.publishedDate,
+                    id: item.id,
+                  });
                 }}
-              />
+              >
+                <Image
+                  source={{ uri: background }}
+                  style={{
+                    width: 128,
+                    height: 188,
+                    backgroundColor: "#eee",
+                    marginTop: 10,
+                  }}
+                />
+              </TouchableOpacity>
             </View>
             <Text style={styles.bookTitle}>{item.volumeInfo.title}</Text>
           </View>

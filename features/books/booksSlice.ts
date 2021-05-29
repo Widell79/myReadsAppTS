@@ -27,10 +27,10 @@ export const booksSlice = createSlice({
         ];
       },
     update_shelf: (state, action: PayloadAction<BookParams>) => {
-      console.log(action.payload.shelf);
+      const {shelf, id} = action.payload
       
       return [
-        {...state[0], shelf: action.payload.shelf}
+        {...state[0], shelf}
       ]
     }
     
@@ -44,7 +44,7 @@ export function updateShelf(id: string, shelf: string) {
     try {
       await getBook(id).then((book) => {
         console.log("Slice", book)});
-      dispatch(update_shelf(<BookParams>{shelf}));
+      dispatch(update_shelf(<BookParams>{shelf, id}));
     } catch (err) {
       console.warn("Error in saveCard: ", err);
       alert("There was an error saving your card. Please try again.");
