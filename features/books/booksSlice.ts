@@ -3,6 +3,7 @@ import { State } from 'react-native-gesture-handler';
 import type { RootState } from '../../store/store'
 import {getBook} from "../../utils/api"
 import {BookParams} from "../../components/Params"
+import { Value } from 'react-native-reanimated';
 
 
 
@@ -15,25 +16,21 @@ export const booksSlice = createSlice({
   reducers: {
       // Use the PayloadAction type to declare the contents of `action.payload`
     receive_books: (state, action: PayloadAction<BookParams>) => {
-        
+      console.log("Payload", action.payload);
         return [
           {
             ...state,
             ...action.payload,
-            shelf: "currentlyReading",
+            shelf: "currentlyReading"
+            
           },
         ];
       },
     update_shelf: (state, action: PayloadAction<BookParams>) => {
-      console.log(action);
+      console.log(action.payload.shelf);
       
       return [
-        {
-          ...state,
-          ...action.payload,
-          shelf: action.payload.shelf
-          
-        }
+        {...state[0], shelf: action.payload.shelf}
       ]
     }
     

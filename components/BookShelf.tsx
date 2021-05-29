@@ -17,8 +17,8 @@ export const convertShelf = (shelf: string) => {
       return "currentlyReading";
     case "Want to Read":
       return "wantToRead";
-    case "read":
-      return "Read";
+    case "Read":
+      return "read";
   }
 };
 
