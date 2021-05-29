@@ -7,7 +7,7 @@ import { Value } from 'react-native-reanimated';
 
 
 
-const initialState : BookParams[] = [];
+const initialState : BookParams[] = [{volumeInfo: {}, id: "", shelf: "currentlyReading"}];
 
 export const booksSlice = createSlice({
   name: 'books',
