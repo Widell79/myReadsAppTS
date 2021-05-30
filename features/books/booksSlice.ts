@@ -7,7 +7,7 @@ import { Value } from 'react-native-reanimated';
 
 
 
-const initialState : BookParams[] = [{volumeInfo: {}, id: "", shelf: "currentlyReading"}];
+const initialState : BookParams[] = [];
 
 export const booksSlice = createSlice({
   name: 'books',
@@ -16,23 +16,21 @@ export const booksSlice = createSlice({
   reducers: {
       // Use the PayloadAction type to declare the contents of `action.payload`
     receive_books: (state, action: PayloadAction<BookParams>) => {
-      console.log("Payload", action.payload);
-        return [
-          {
-            ...state,
-            ...action.payload,
-            shelf: "currentlyReading"
-            
-          },
-        ];
+      const initialBook = {...state, ...action.payload, shelf: "currentlyReading"}
+
+      return [...state, initialBook];
       },
+  
     update_shelf: (state, action: PayloadAction<BookParams>) => {
-      const {shelf, id} = action.payload
+      const {shelf, id, book} = action.payload;
+      const updatedBook = {...book, shelf}
       
-      return [
-        {...state[0], shelf}
-      ]
+      if(state[0].id === id || state[state.length -1].id === id){
+      return [{...state = updatedBook}]
+    } else {
+      return [...state, updatedBook]
     }
+  }
     
   },
 })
@@ -43,8 +41,8 @@ export function updateShelf(id: string, shelf: string) {
   return async (dispatch) => {
     try {
       await getBook(id).then((book) => {
-        console.log("Slice", book)});
-      dispatch(update_shelf(<BookParams>{shelf, id}));
+        dispatch(update_shelf(<BookParams>{shelf, id, book}));
+      });
     } catch (err) {
       console.warn("Error in saveCard: ", err);
       alert("There was an error saving your card. Please try again.");

@@ -5,7 +5,7 @@ export type RootStackParamList = {
 };
 
 export type BookParams = {
-    
+    book?: { [key: string]: any };
     volumeInfo: { [key: string]: any };
     id: string;
     shelf: "none" | "currentlyReading" | "wantToRead" | "read"

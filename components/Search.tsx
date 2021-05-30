@@ -48,7 +48,8 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
   console.log("searched", searchedBooks);
 
   const renderBooks = ({ item }) => {
-    console.log("rendered book", item);
+    const bookOnShelf = currentBooks.find(({ id }) => id === item.id);
+    const shelf = bookOnShelf ? bookOnShelf.shelf : "none";
     const background = `${
       item.volumeInfo.imageLinks
         ? item.volumeInfo.imageLinks.thumbnail
@@ -66,7 +67,7 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
                     bookTitle: item.volumeInfo.title,
                     bookAuthor: item.volumeInfo.authors,
                     image: background,
-                    shelf: item.shelf,
+                    shelf: shelf,
                     language: item.volumeInfo.language,
                     pages: item.volumeInfo.pageCount,
                     publishedDate: item.volumeInfo.publishedDate,
