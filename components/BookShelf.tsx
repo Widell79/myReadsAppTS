@@ -128,7 +128,6 @@ export default BookShelf;
 const styles = StyleSheet.create({
   bookshelf: {
     paddingTop: 20,
-    paddingLeft: 20,
     paddingRight: 20,
   },
   bookshelfBooks: {
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
   },
   listBooksContent: {
     backgroundColor: "#faf3e0",
-    paddingLeft: 80,
+    paddingLeft: 40,
     flex: 1,
   },
   bookshelfTitle: {
