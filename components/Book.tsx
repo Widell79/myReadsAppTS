@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import DropDownPicker, { ValueType } from "react-native-dropdown-picker";
+import DropDownPicker from "react-native-dropdown-picker";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
-import { BookRouteParams } from "./Params";
+import { BookRouteParams, RootStackParamList } from "./Params";
 import { useAppDispatch } from "../hooks";
 import { updateShelf } from "../features/books/booksSlice";
 
 interface bookProp {
+  navigation: StackNavigationProp<RootStackParamList, "Book">;
   route: RouteProp<BookRouteParams, "volumeInfo">;
 }
 
-const Book: React.FC<bookProp> = ({ route }) => {
+const Book: React.FC<bookProp> = ({ route, navigation }) => {
   const {
     image,
     bookTitle,
@@ -36,12 +38,8 @@ const Book: React.FC<bookProp> = ({ route }) => {
   const updateBookShelf = (id: { id: string }, shelf: string) => {
     const bookId = id.id;
     dispatch(updateShelf(bookId, shelf));
+    navigation.push("BookShelf");
   };
-
-  // const handleUpdate = (e: React.FormEvent<HTMLSelectElement>) => {
-  //   const value = e.currentTarget.value;
-  //   updateBookShelf({ id }, value);
-  // };
 
   return (
     <View style={styles.container}>
