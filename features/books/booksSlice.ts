@@ -1,13 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { State } from 'react-native-gesture-handler';
+import { createSlice, PayloadAction, Store } from '@reduxjs/toolkit'
 import type { RootState } from '../../store/store'
 import {getBook} from "../../utils/api"
 import {BookParams} from "../../components/Params"
-import { Value } from 'react-native-reanimated';
-
+import { Dispatch } from 'react';
 
 
 const initialState : BookParams[] = [];
+
 
 export const booksSlice = createSlice({
   name: 'books',
@@ -46,7 +45,8 @@ export const booksSlice = createSlice({
 export const { receive_books, update_shelf } = booksSlice.actions
 
 export function updateShelf(id: string, shelf: string) {
-  return async (dispatch) => {
+  
+  return async (dispatch: Dispatch<any>) => {
     try {
       await getBook(id).then((book) => {
         dispatch(update_shelf(<BookParams>{shelf, id, book}));
