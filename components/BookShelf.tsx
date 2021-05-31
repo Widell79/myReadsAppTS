@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   openSearch: {
     position: "relative",
-    marginTop: 200,
-    marginLeft: 20,
+    marginTop: 15,
+    marginLeft: 5,
   },
 });

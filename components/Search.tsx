@@ -108,7 +108,7 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
       <View style={styles.bookshelfBooks}>
         <View>
           <View style={styles.searchBooksBar}>
-            <View style={styles.searchBooksInputWrapper}>
+            <View>
               <TextInput
                 style={styles.searchInput}
                 onChange={updateSearch}
@@ -119,7 +119,7 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
 
           <FlatList
             data={bookListInfo}
-            numColumns={4}
+            numColumns={2}
             renderItem={({ item }) => renderBooks({ item })}
             keyExtractor={(item: any) => item.id.toString()}
           />
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
   },
   searchBooksBar: {
     position: "relative",
-    width: "100%",
     marginTop: 20,
     zIndex: 5,
   },
@@ -152,12 +151,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchInput: {
-    width: "100%",
-    padding: 15,
-    fontSize: 18,
+    height: 60,
+    width: 250,
+    margin: 12,
+    paddingLeft: 10,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: "#eabf9f",
   },
   searchBooksResults: {
-    padding: 50,
+    padding: 25,
   },
   booksGrid: {
     padding: 0,
