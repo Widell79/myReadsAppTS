@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import DropDownPicker, { ValueType } from "react-native-dropdown-picker";
 import { RouteProp } from "@react-navigation/native";
 import { BookRouteParams } from "./Params";
-import * as BooksAPI from "../utils/api";
 import { useAppDispatch } from "../hooks";
 import { updateShelf } from "../features/books/booksSlice";
 
@@ -22,6 +22,15 @@ const Book: React.FC<bookProp> = ({ route }) => {
     publishedDate,
   } = route.params;
 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Currently Reading", value: "currentlyReading" },
+    { label: "Want to Read", value: "wantToRead" },
+    { label: "Read", value: "read" },
+    { label: "None", value: "none" },
+  ]);
+
   const dispatch = useAppDispatch();
 
   const updateBookShelf = (id: { id: string }, shelf: string) => {
@@ -29,10 +38,10 @@ const Book: React.FC<bookProp> = ({ route }) => {
     dispatch(updateShelf(bookId, shelf));
   };
 
-  const handleUpdate = (e: React.FormEvent<HTMLSelectElement>) => {
-    const value = e.currentTarget.value;
-    updateBookShelf({ id }, value);
-  };
+  // const handleUpdate = (e: React.FormEvent<HTMLSelectElement>) => {
+  //   const value = e.currentTarget.value;
+  //   updateBookShelf({ id }, value);
+  // };
 
   return (
     <View style={styles.container}>
@@ -48,7 +57,21 @@ const Book: React.FC<bookProp> = ({ route }) => {
                 marginTop: 10,
               }}
             />
-            <View style={styles.bookShelfChanger}>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              onChangeValue={(value: string) => {
+                updateBookShelf({ id }, value);
+              }}
+              style={{
+                marginTop: 5,
+              }}
+            />
+            {/* <Text style={styles.bookShelfChanger}>
               <select
                 onChange={handleUpdate}
                 defaultValue={shelf === undefined ? "none" : shelf}
@@ -61,7 +84,7 @@ const Book: React.FC<bookProp> = ({ route }) => {
                 <option value="read">Read</option>
                 <option value="none">None</option>
               </select>
-            </View>
+            </Text> */}
           </View>
           <Text style={styles.bookTitle}>{bookTitle}</Text>
           <Text style={styles.bookAuthors}>{bookAuthor}</Text>
@@ -114,7 +137,5 @@ const styles = StyleSheet.create({
     bottom: -10,
     width: 130,
     height: 40,
-
-    cursor: "pointer",
   },
 });

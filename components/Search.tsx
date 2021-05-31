@@ -155,8 +155,6 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     fontSize: 18,
-    border: "none",
-    outline: "none",
   },
   searchBooksResults: {
     padding: 50,
