@@ -45,7 +45,6 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
   };
 
   const searchedBooks = useAppSelector(selectSearch);
-  console.log("searched", searchedBooks);
 
   function mapBooksToList(books: object) {
     return {

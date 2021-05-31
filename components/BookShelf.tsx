@@ -36,7 +36,6 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
   const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
 
   const books = useAppSelector(selectBooks);
-  //console.log("My books", books);
 
   function mapBooksToList(books: object) {
     return {
@@ -48,8 +47,6 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
   const bookListInfo = bookList.values.map((data) => {
     return data;
   });
-
-  console.log("BookInfo", bookListInfo);
 
   return (
     <View style={styles.listBooksContent}>
@@ -119,7 +116,7 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
             })
           }
         >
-          <Ionicons name="add-circle" size={42} color="#1e212d" />
+          <Ionicons name="add-circle" size={48} color="#5aa897" />
         </TouchableOpacity>
       </View>
     </View>
@@ -173,7 +170,7 @@ const styles = StyleSheet.create({
   },
   openSearch: {
     position: "relative",
-    marginTop: 50,
+    marginTop: 200,
     marginLeft: 20,
   },
 });

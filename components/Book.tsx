@@ -32,7 +32,6 @@ const Book: React.FC<bookProp> = ({ route }) => {
   const handleUpdate = (e: React.FormEvent<HTMLSelectElement>) => {
     const value = e.currentTarget.value;
     updateBookShelf({ id }, value);
-    console.log(value);
   };
 
   return (
