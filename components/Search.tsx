@@ -47,6 +47,17 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
   const searchedBooks = useAppSelector(selectSearch);
   console.log("searched", searchedBooks);
 
+  function mapBooksToList(books: object) {
+    return {
+      values: Object.values(books),
+    };
+  }
+
+  const bookList = mapBooksToList(searchedBooks);
+  const bookListInfo = bookList.values.map((data) => {
+    return data;
+  });
+
   const renderBooks = ({ item }) => {
     const bookOnShelf = currentBooks.find(({ id }) => id === item.id);
     const shelf = bookOnShelf ? bookOnShelf.shelf : "none";
@@ -108,7 +119,7 @@ const Search: React.FC<bookProp> = ({ route, navigation }) => {
           </View>
 
           <FlatList
-            data={searchedBooks}
+            data={bookListInfo}
             numColumns={4}
             renderItem={({ item }) => renderBooks({ item })}
             keyExtractor={(item: any) => item.id.toString()}

@@ -11,9 +11,10 @@ export const searchSlice = createSlice({
   initialState,
   reducers: {
       // Use the PayloadAction type to declare the contents of `action.payload`
-      add_search: (state, action: PayloadAction<[]>) => {
-       
-        return [...action.payload];
+      add_search: (state, action: PayloadAction<BookParams>) => {
+        return {
+          ...action.payload,
+        }
         
       },
     

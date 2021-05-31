@@ -36,7 +36,20 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
   const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
 
   const books = useAppSelector(selectBooks);
-  console.log("My books", books);
+  //console.log("My books", books);
+
+  function mapBooksToList(books: object) {
+    return {
+      values: Object.values(books),
+    };
+  }
+
+  const bookList = mapBooksToList(books);
+  const bookListInfo = bookList.values.map((data) => {
+    return data;
+  });
+
+  console.log("BookInfo", bookListInfo);
 
   return (
     <View style={styles.listBooksContent}>
@@ -45,7 +58,7 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
           <Text style={styles.bookshelfTitle}>{shelf}</Text>
           <View style={styles.bookshelfBooks}>
             <View style={styles.booksGrid}>
-              {books
+              {bookListInfo
                 .filter(function (book) {
                   return book.shelf === convertShelf(shelf);
                 })
@@ -92,16 +105,6 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
                         </View>
                       </TouchableOpacity>
                     </View>
-
-                    /* <Book
-                      image={background}
-                      bookTitle={book.volumeInfo.title}
-                      bookAuthor={book.volumeInfo.authors}
-                      key={book.id}
-                      updateShelf={updateShelf}
-                      id={book.id}
-                      shelf={book.shelf}
-                    /> */
                   );
                 })}
             </View>
@@ -112,7 +115,7 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("Search", {
-              currentBooks: books,
+              currentBooks: bookListInfo,
             })
           }
         >

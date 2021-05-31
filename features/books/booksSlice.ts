@@ -16,20 +16,28 @@ export const booksSlice = createSlice({
   reducers: {
       // Use the PayloadAction type to declare the contents of `action.payload`
     receive_books: (state, action: PayloadAction<BookParams>) => {
-      const initialBook = {...state, ...action.payload, shelf: "currentlyReading"}
+      const initialBook = { ...action.payload, shelf: "currentlyReading"}
 
-      return [...state, initialBook];
+      // return [...state, initialBook];
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...initialBook
+        }
+      }
+      
       },
   
     update_shelf: (state, action: PayloadAction<BookParams>) => {
       const {shelf, id, book} = action.payload;
       const updatedBook = {...book, shelf}
-      
-      if(state[0].id === id || state[state.length -1].id === id){
-      return [{...state = updatedBook}]
-    } else {
-      return [...state, updatedBook]
-    }
+
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...updatedBook
+        }
+      }
   }
     
   },
