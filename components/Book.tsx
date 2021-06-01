@@ -38,7 +38,7 @@ const Book: React.FC<bookProp> = ({ route, navigation }) => {
   const updateBookShelf = (id: { id: string }, shelf: string) => {
     const bookId = id.id;
     dispatch(updateShelf(bookId, shelf));
-    navigation.push("BookShelf");
+    navigation.navigate("BookShelf");
   };
 
   return (
