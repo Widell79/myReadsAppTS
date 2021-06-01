@@ -48,52 +48,8 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
     return data;
   });
 
-  const renderBooks = ({ item }) => {
-    const background = `${
-      item.volumeInfo.imageLinks
-        ? item.volumeInfo.imageLinks.thumbnail
-        : "./bg.png"
-    }`;
-
-    return (
-      <View>
-        <View style={styles.booksGrid}>
-          <View style={styles.book}>
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Book", {
-                    bookTitle: item.volumeInfo.title,
-                    bookAuthor: item.volumeInfo.authors,
-                    image: background,
-                    shelf: item.shelf,
-                    language: item.volumeInfo.language,
-                    pages: item.volumeInfo.pageCount,
-                    publishedDate: item.volumeInfo.publishedDate,
-                    id: item.id,
-                  });
-                }}
-              >
-                <Image
-                  source={{ uri: background }}
-                  style={{
-                    width: 128,
-                    height: 188,
-                    backgroundColor: "#eee",
-                    marginTop: 10,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.bookTitle}>{item.volumeInfo.title}</Text>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
   return (
-    <View style={styles.container}>
+    <View style={styles.listBooksContent}>
       {bookShelfs.map((shelf) => (
         <View key={shelf} style={styles.bookshelf}>
           <Text style={styles.bookshelfTitle}>{shelf}</Text>
@@ -170,11 +126,6 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
 export default BookShelf;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#faf3e0",
-    paddingLeft: 40,
-    flex: 1,
-  },
   bookshelf: {
     paddingTop: 20,
     paddingRight: 20,
@@ -182,7 +133,11 @@ const styles = StyleSheet.create({
   bookshelfBooks: {
     alignItems: "center",
   },
-
+  listBooksContent: {
+    backgroundColor: "#faf3e0",
+    paddingLeft: 40,
+    flex: 1,
+  },
   bookshelfTitle: {
     fontSize: 24,
     borderBottomColor: "#eabf9f",
