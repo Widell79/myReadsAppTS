@@ -34,7 +34,7 @@ export const booksSlice = createSlice({
       return {
         ...state,
         [action.payload.id]: {
-          ...updatedBook
+          ...updatedBook, shelf
         }
       }
   }

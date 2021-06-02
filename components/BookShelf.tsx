@@ -1,5 +1,12 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "./Params";
 
@@ -27,6 +34,8 @@ interface bookShelfProp {
 }
 
 const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
+  const [bookData, setBookData] = useState([]);
+  const [filteredBookList, setFilteredBookList] = useState([]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -103,51 +112,7 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
                 .filter(function (book) {
                   return book.shelf === convertShelf(shelf);
                 })
-                .map((book) => {
-                  const background = `${
-                    book.volumeInfo.imageLinks
-                      ? book.volumeInfo.imageLinks.thumbnail
-                      : "./bg.png"
-                  }`;
-                  return (
-                    <View key={book.id}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate("Book", {
-                            bookTitle: book.volumeInfo.title,
-                            bookAuthor: book.volumeInfo.authors,
-                            image: background,
-                            shelf: book.shelf,
-                            language: book.volumeInfo.language,
-                            pages: book.volumeInfo.pageCount,
-                            publishedDate: book.volumeInfo.publishedDate,
-                            id: book.id,
-                          });
-                        }}
-                      >
-                        <View style={styles.book}>
-                          <View style={styles.bookTop}>
-                            <Image
-                              source={{ uri: background }}
-                              style={{
-                                width: 128,
-                                height: 188,
-                                backgroundColor: "#eee",
-                                marginTop: 10,
-                              }}
-                            />
-                          </View>
-                          <Text style={styles.bookTitle}>
-                            {book.volumeInfo.title}
-                          </Text>
-                          <Text style={styles.bookAuthors}>
-                            {book.volumeInfo.authors}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  );
-                })}
+                .map((book) => {})}
             </View>
           </View>
         </View>
@@ -163,6 +128,12 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
           <Ionicons name="add-circle" size={48} color="#5aa897" />
         </TouchableOpacity>
       </View>
+      <FlatList
+        data={bookListInfo}
+        numColumns={2}
+        renderItem={({ item }) => renderBooks({ item })}
+        keyExtractor={(item: any) => item.id.toString()}
+      />
     </View>
   );
 };
