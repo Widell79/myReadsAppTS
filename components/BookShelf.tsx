@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  FlatList,
+  SectionList,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "./Params";
@@ -34,15 +34,13 @@ interface bookShelfProp {
 }
 
 const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
-  const [bookData, setBookData] = useState([]);
-  const [filteredBookList, setFilteredBookList] = useState([]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(handleInitialData());
   }, []);
 
-  const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
+  //const bookShelfs = ["Currently Reading", "Want to Read", "Read"];
 
   const books = useAppSelector(selectBooks);
 
@@ -57,66 +55,8 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
     return data;
   });
 
-  const renderBooks = ({ item }) => {
-    const background = `${
-      item.volumeInfo.imageLinks
-        ? item.volumeInfo.imageLinks.thumbnail
-        : "./bg.png"
-    }`;
-
-    return (
-      <View>
-        <View style={styles.booksGrid}>
-          <View style={styles.book}>
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Book", {
-                    bookTitle: item.volumeInfo.title,
-                    bookAuthor: item.volumeInfo.authors,
-                    image: background,
-                    shelf: item.shelf,
-                    language: item.volumeInfo.language,
-                    pages: item.volumeInfo.pageCount,
-                    publishedDate: item.volumeInfo.publishedDate,
-                    id: item.id,
-                  });
-                }}
-              >
-                <Image
-                  source={{ uri: background }}
-                  style={{
-                    width: 128,
-                    height: 188,
-                    backgroundColor: "#eee",
-                    marginTop: 10,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.bookTitle}>{item.volumeInfo.title}</Text>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
-      {bookShelfs.map((shelf) => (
-        <View key={shelf} style={styles.bookshelf}>
-          <Text style={styles.bookshelfTitle}>{shelf}</Text>
-          <View style={styles.bookshelfBooks}>
-            <View style={styles.booksGrid}>
-              {bookListInfo
-                .filter(function (book) {
-                  return book.shelf === convertShelf(shelf);
-                })
-                .map((book) => {})}
-            </View>
-          </View>
-        </View>
-      ))}
       <View style={styles.openSearch}>
         <TouchableOpacity
           onPress={() =>
@@ -128,11 +68,82 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
           <Ionicons name="add-circle" size={48} color="#5aa897" />
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={bookListInfo}
-        numColumns={2}
-        renderItem={({ item }) => renderBooks({ item })}
-        keyExtractor={(item: any) => item.id.toString()}
+      <SectionList
+        sections={[
+          {
+            title: "Currently Reading",
+            data: bookListInfo.filter(function (book) {
+              return book.shelf === convertShelf("Currently Reading");
+            }),
+          },
+          {
+            title: "Want to Read",
+            data: bookListInfo.filter(function (book) {
+              return book.shelf === convertShelf("Want to Read");
+            }),
+          },
+          {
+            title: "Read",
+            data: bookListInfo.filter(function (book) {
+              return book.shelf === convertShelf("Read");
+            }),
+          },
+        ]}
+        renderItem={({ item }) => {
+          const background = `${
+            item.volumeInfo.imageLinks
+              ? item.volumeInfo.imageLinks.thumbnail
+              : "./bg.png"
+          }`;
+
+          return (
+            <View>
+              <View style={styles.booksGrid}>
+                <View style={styles.book}>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("Book", {
+                          bookTitle: item.volumeInfo.title,
+                          bookAuthor: item.volumeInfo.authors,
+                          image: background,
+                          shelf: item.shelf,
+                          language: item.volumeInfo.language,
+                          pages: item.volumeInfo.pageCount,
+                          publishedDate: item.volumeInfo.publishedDate,
+                          id: item.id,
+                        });
+                      }}
+                    >
+                      <Image
+                        source={{ uri: background }}
+                        style={{
+                          width: 128,
+                          height: 188,
+                          backgroundColor: "#eee",
+                          marginTop: 10,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.bookTitle}>{item.volumeInfo.title}</Text>
+                  <Text style={styles.bookAuthors}>
+                    {item.volumeInfo.authors}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          );
+        }}
+        renderSectionHeader={({ section }) => (
+          <View style={styles.bookshelf}>
+            <Text style={styles.bookshelfTitle}>{section.title}</Text>
+            <View style={styles.bookshelfBooks}>
+              <View style={styles.booksGrid}></View>
+            </View>
+          </View>
+        )}
+        keyExtractor={(item) => item.id}
       />
     </View>
   );
@@ -151,7 +162,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   bookshelfBooks: {
-    alignItems: "center",
+    alignItems: "baseline",
   },
 
   bookshelfTitle: {
@@ -162,9 +173,6 @@ const styles = StyleSheet.create({
   booksGrid: {
     padding: 0,
     margin: 0,
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
   },
   bookTitle: {
     fontSize: 16,
