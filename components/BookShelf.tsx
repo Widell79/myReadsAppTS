@@ -138,7 +138,7 @@ const BookShelf: React.FC<bookShelfProp> = ({ navigation }) => {
         renderSectionHeader={({ section }) => (
           <View style={styles.bookshelf}>
             <Text style={styles.bookshelfTitle}>{section.title}</Text>
-            <View style={styles.bookshelfBooks}>
+            <View>
               <View style={styles.booksGrid}></View>
             </View>
           </View>
@@ -161,10 +161,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingRight: 20,
   },
-  bookshelfBooks: {
-    alignItems: "baseline",
-  },
-
   bookshelfTitle: {
     fontSize: 24,
     borderBottomColor: "#eabf9f",
@@ -173,6 +169,7 @@ const styles = StyleSheet.create({
   booksGrid: {
     padding: 0,
     margin: 0,
+    alignItems: "center",
   },
   bookTitle: {
     fontSize: 16,
